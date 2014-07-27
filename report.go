@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/gcurtis/commitfmt/rules"
+	"sort"
 	"strings"
 )
 
@@ -20,6 +21,7 @@ func (rep *report) append(v ...rules.Violation) {
 
 // string creates a human-readable string from the report.
 func (rep *report) string() string {
+	sort.Sort(rep)
 	str := ""
 	for _, v := range rep.violations {
 		lineStart, lineNum, charNum := rep.lineChar(v.Pos)
@@ -70,4 +72,19 @@ func (rep *report) context(lineStart int, charNum int, prefix string) string {
 	buf.WriteRune('^')
 
 	return buf.String()
+}
+
+// Len satisfies sort.Interface.
+func (rep *report) Len() int {
+	return len(rep.violations)
+}
+
+// Swap satisfies sort.Interface.
+func (rep *report) Swap(i, j int) {
+	rep.violations[i], rep.violations[j] = rep.violations[j], rep.violations[i]
+}
+
+// Less satisfies sort.Interface.
+func (rep *report) Less(i, j int) bool {
+	return rep.violations[i].Pos < rep.violations[j].Pos
 }

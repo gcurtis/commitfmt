@@ -273,12 +273,12 @@ in between words and the body doesn't end with punctuation`
 	rep := runRules(msg)
 	fmt.Println(rep.string())
 
-	// Output: [1:51] subj-len: the subject should not exceed 50 characters.
-	// 	This commit message has a Number of different violations that will be caught.
-	// 	                                                  ^
-	// [1:27] subj-sentence-case: the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized.
+	// Output: [1:27] subj-sentence-case: the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized.
 	// 	This commit message has a Number of different violations that will be caught.
 	// 	                          ^
+	// [1:51] subj-len: the subject should not exceed 50 characters.
+	// 	This commit message has a Number of different violations that will be caught.
+	// 	                                                  ^
 	// [1:77] subj-no-period: the subject should not have a period.
 	// 	This commit message has a Number of different violations that will be caught.
 	// 	                                                                            ^
