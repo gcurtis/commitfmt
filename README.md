@@ -6,7 +6,7 @@ commitfmt is a git hook that helps validate that a commit message is properly fo
 Install
 -------
 
-The easiest way is to download the latest release on GitHub.
+The easiest way is to download the [latest release](https://github.com/gcurtis/commitfmt/releases) on GitHub.
 
 If you have Go installed, you can also install it with `go get github.com/gcurtis/commitfmt` and find it in `$GOPATH/bin/commitfmt`.
 
