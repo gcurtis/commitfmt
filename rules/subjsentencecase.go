@@ -5,7 +5,7 @@ import (
 	"unicode"
 )
 
-// SubjSentenceCase enforces that the subject adheres to sentence casing, i.e.,
+// SubjSentenceCase checks that the subject adheres to sentence casing, i.e.,
 // only the first letter of the first word should be capitalized. This rule does
 // its best to detect proper capitalization, but it will need to be ignored for
 // pronouns (e.g., "Fix references to Java libraries" will incorrectly trigger
@@ -19,7 +19,7 @@ func (rule *subjSentenceCase) Desc() string {
 		" i.e., only the first letter of the first word should be capitalized."
 }
 
-func (rule *subjSentenceCase) Enforce(subject string, body string) []Violation {
+func (rule *subjSentenceCase) Check(subject string, body string) []Violation {
 	if len(subject) == 0 {
 		return nil
 	}

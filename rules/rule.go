@@ -5,7 +5,7 @@ Adding Rules
 
 Adding new rules is simple. Create a new type that satisfies rules.Interface,
 create a global instance for the rule, and then add that instance to rules.All.
-Here is an example rule named "my-rule" that enforces that the commit subject
+Here is an example rule named "my-rule" that checks that the commit subject
 begins with the word "Ticket".
 
 	// myrule.go
@@ -25,10 +25,10 @@ begins with the word "Ticket".
 		return `my-rule: the commit subject must begin with "Ticket".`
 	}
 
-	// Enforce should return any violations of your rule (or nil if there aren't
-	// any). This example rule enforces that the commit subject starts with the
+	// Check should return any violations of your rule (or nil if there aren't
+	// any). This example rule checks that the commit subject starts with the
 	// word "Ticket".
-	func (rule *myRule) Enforce(subject string, body string) []Violation {
+	func (rule *myRule) Check(subject string, body string) []Violation {
 		if !strings.HasPrefix(subject, "Ticket") {
 			return []Violation{Violation{rule, 0}}
 		}
@@ -36,7 +36,7 @@ begins with the word "Ticket".
 	}
 
 As long as your rule is added to rules.All, it will be automatically be picked
-up and enforced by commitfmt.
+up and checked by commitfmt.
 
 */
 package rules
@@ -55,9 +55,9 @@ type Interface interface {
 	// ending in a period."
 	Desc() string
 
-	// Enforce takes a commit subject and body, and returns a list of positions
+	// Check takes a commit subject and body, and returns a list of positions
 	// where the rule was violated.
-	Enforce(subject string, body string) []Violation
+	Check(subject string, body string) []Violation
 }
 
 // All is a slice of every rule in this package.

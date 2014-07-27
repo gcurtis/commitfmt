@@ -5,7 +5,7 @@ import (
 	"unicode"
 )
 
-// BodyPunc enforces that the body ends with valid punctuation (".", "!", "?")
+// BodyPunc checks that the body ends with valid punctuation (".", "!", "?")
 // unless it ends with a list.
 var BodyPunc = &bodyPunc{}
 
@@ -16,7 +16,7 @@ func (rule *bodyPunc) Desc() string {
 		`(".", "!", "?") unless it ends with a list.`
 }
 
-func (rule *bodyPunc) Enforce(subject string, body string) []Violation {
+func (rule *bodyPunc) Check(subject string, body string) []Violation {
 	if len(body) == 0 {
 		return nil
 	}

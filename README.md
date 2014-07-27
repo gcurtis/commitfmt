@@ -22,7 +22,7 @@ Rules
 
 A commit message should have a descriptive subject, an optional body, and be hard-wrapped to the appropriate line length. The message itself should be phrased in the imperative. For example, a message with the subject `Fixed build error` is incorrect. A better subject would be `Fix build error due to misspelled method`. The body should have correct spelling/grammar and consist of full sentences.
 
-Rules around spelling and grammar are difficult to check automatically and would result in too many false-positives. However, the following rules can be automatically enforced by commitfmt.
+Rules around spelling and grammar are difficult to check automatically and would result in too many false-positives. However, the following rules can be automatically checked by commitfmt.
 
 ### Subject
 

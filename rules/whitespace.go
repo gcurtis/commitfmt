@@ -1,6 +1,6 @@
 package rules
 
-// Whitespace enforces that there isn't any unnecessary spacing, i.e., only one
+// Whitespace checks that there isn't any unnecessary spacing, i.e., only one
 // line break between paragraphs, only one space between words, and no trailing
 // whitespace.
 var Whitespace = &whitespace{}
@@ -13,7 +13,7 @@ func (rule *whitespace) Desc() string {
 		"words, and no trailing whitespace."
 }
 
-func (rule *whitespace) Enforce(subject string, body string) []Violation {
+func (rule *whitespace) Check(subject string, body string) []Violation {
 	msg := subject + "\n\n" + body
 	var violations []Violation
 	space := 0

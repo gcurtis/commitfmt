@@ -41,7 +41,7 @@ func main() {
 	}
 }
 
-// runRules parses a commit message and then enforces every rule found in the
+// runRules parses a commit message and then checks every rule found in the
 // rules package.
 func runRules(msg string) (rep *report) {
 	msg = strings.TrimSpace(msg)
@@ -49,7 +49,7 @@ func runRules(msg string) (rep *report) {
 	subject, body := parseMsg(msg)
 
 	for _, rule := range rules.All {
-		violations := rule.Enforce(subject, body)
+		violations := rule.Check(subject, body)
 		rep.append(violations...)
 	}
 

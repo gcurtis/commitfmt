@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// BodyLen enforces that each line of the body does not exceed 72 characters.
+// BodyLen checks that each line of the body does not exceed 72 characters.
 var BodyLen = &bodyLen{}
 
 type bodyLen struct{}
@@ -13,7 +13,7 @@ func (rule *bodyLen) Desc() string {
 	return "body-len: each line of the body should not exceed 72 characters."
 }
 
-func (rule *bodyLen) Enforce(subject string, body string) []Violation {
+func (rule *bodyLen) Check(subject string, body string) []Violation {
 	var violations []Violation
 	offset := len(subject) + 2
 
