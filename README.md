@@ -13,7 +13,7 @@ If you have Go installed, you can also install it with `go get github.com/gcurti
 Usage
 -----
 
-commitfmt can be called either from an existing hook with `commitfmt <message-file>` or by renaming it to `commit-msg` and placing it directly in your repo's git hooks directory. For example: `cp commitfmt ~/my-repo/.git/hooks/commit-msg`.
+commitfmt can be called either from an existing hook with `commitfmt <message-file>` or by linking to it in your repo's git hooks directory. For example: `ln -s commitfmt ~/my-repo/.git/hooks/commit-msg`.
 
 There are times when commitfmt may incorrectly return an error. For example, commitfmt will complain if your message has a long URL that goes past the 72 character limit, even though it may be a properly formatted message. In which case, you can tell git to bypass the commitfmt hook by running `git commit --no-verify`.
 
