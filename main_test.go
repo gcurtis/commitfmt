@@ -279,7 +279,7 @@ in between words and the body doesn't end with punctuation`
 	// [1:51] subj-len: the subject should not exceed 50 characters.
 	// 	This commit message has a Number of different violations that will be caught.
 	// 	                                                  ^
-	// [1:77] subj-no-period: the subject should not have a period.
+	// [1:77] subj-no-period: the subject should not end with a period.
 	// 	This commit message has a Number of different violations that will be caught.
 	// 	                                                                            ^
 	// [3:65] whitespace - there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
