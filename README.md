@@ -27,7 +27,7 @@ Rules around spelling and grammar are difficult to check automatically and would
 ### Subject
 
 * subj-sentence-case - the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized. This rule does its best to detect proper capitalization, but it will need to be ignored for pronouns (e.g., "Fix references to Java libraries" will incorrectly trigger this rule).
-* subj-no-period - the subject should not have a period.
+* subj-no-period - the subject should not end with a period.
 * subj-len - the subject should not exceed 50 characters.
 * subj-one-line - the subject should not span multiple lines. Make sure there are two newlines between the subject and body.
 

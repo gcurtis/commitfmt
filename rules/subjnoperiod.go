@@ -4,13 +4,13 @@ import (
 	"strings"
 )
 
-// SubjNoPeriod enforces that the subject does not have a period.
+// SubjNoPeriod enforces that the subject does not end with a period.
 var SubjNoPeriod = &subjNoPeriod{}
 
 type subjNoPeriod struct{}
 
 func (rule *subjNoPeriod) Desc() string {
-	return "subj-no-period: the subject should not have a period."
+	return "subj-no-period: the subject should not end with a period."
 }
 
 func (rule *subjNoPeriod) Enforce(subject string, body string) []Violation {
