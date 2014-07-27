@@ -10,6 +10,9 @@ import (
 	"strings"
 )
 
+const snipLine = "------------------------ >8 ------------------------"
+const commentChar = '#'
+
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "You must provide a path to a file containing"+
@@ -53,9 +56,14 @@ func parseMsg(msg string) (subject string, body string) {
 	split := strings.SplitAfter(msg, "\n")
 	for _, line := range split {
 		trim := strings.TrimSpace(line)
-		if !strings.HasPrefix(trim, "#") {
-			remComments.WriteString(line)
+		if strings.Contains(trim, snipLine) {
+			break
 		}
+		if strings.HasPrefix(trim, string(commentChar)) {
+			continue
+		}
+
+		remComments.WriteString(line)
 	}
 
 	split = strings.SplitN(strings.TrimSpace(remComments.String()), "\n\n", 2)
