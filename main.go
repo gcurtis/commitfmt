@@ -2,6 +2,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/gcurtis/commitfmt/rules"
 	"io/ioutil"
@@ -48,7 +49,16 @@ func runRules(msg string) (rep *report) {
 
 // parseMsg parses a message by breaking it up into a subject and a body.
 func parseMsg(msg string) (subject string, body string) {
-	split := strings.SplitN(msg, "\n\n", 2)
+	remComments := bytes.Buffer{}
+	split := strings.SplitAfter(msg, "\n")
+	for _, line := range split {
+		trim := strings.TrimSpace(line)
+		if !strings.HasPrefix(trim, "#") {
+			remComments.WriteString(line)
+		}
+	}
+
+	split = strings.SplitN(strings.TrimSpace(remComments.String()), "\n\n", 2)
 	subject = split[0]
 	if len(split) > 1 {
 		body = split[1]
