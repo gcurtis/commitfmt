@@ -38,6 +38,10 @@ begins with the word "Ticket".
 As long as your rule is added to rules.All, it will be automatically be picked
 up and checked by commitfmt.
 
+Remember that when calculating the position of a violation, you must take into
+account the subject, two newlines, and the body. So if a violation occurs at
+index 0 in the body, your rule should return the position len(subject) + 2.
+
 */
 package rules
 
