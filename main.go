@@ -1,5 +1,5 @@
-// Package commitfmt provides git hook that validates the formatting of a commit
-// message.
+// Package commitfmt provides a git hook that validates the formatting of a
+// commit message.
 package main
 
 import (
