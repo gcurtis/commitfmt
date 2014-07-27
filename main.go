@@ -1,4 +1,4 @@
-// Package contains the entry point for the commitfmt command.
+// Package commitfmt contains the commitfmt command.
 package main
 
 import (
@@ -10,7 +10,12 @@ import (
 	"strings"
 )
 
+// snipLine is the special line recognized by git that tells it to strip the
+// rest of a commit message.
 const snipLine = "------------------------ >8 ------------------------"
+
+// commentChar is the character git uses for commenting out lines in commit
+// messages.
 const commentChar = '#'
 
 func main() {
@@ -50,7 +55,8 @@ func runRules(msg string) (rep *report) {
 	return
 }
 
-// parseMsg parses a message by breaking it up into a subject and a body.
+// parseMsg parses a message by breaking it up into a subject and a body. It
+// will also remove any commented-out or snipped content.
 func parseMsg(msg string) (subject string, body string) {
 	remComments := bytes.Buffer{}
 	split := strings.SplitAfter(msg, "\n")
