@@ -3,10 +3,17 @@ commitfmt
 
 commitfmt is a git hook that helps validate that a commit message is properly formatted.
 
+Install
+-------
+
+The easiest way is to download the latest release on GitHub.
+
+If you have Go installed, you can also install it with `go get github.com/gcurtis/commitfmt` and find it in `$GOPATH/bin/commitfmt`.
+
 Usage
 -----
 
-commitfmt can be called either from an existing hook with `commitfmt <message-file>` or by renaming it to `commit-msg` and placing it directly in your git hooks directory.
+commitfmt can be called either from an existing hook with `commitfmt <message-file>` or by renaming it to `commit-msg` and placing it directly in your repo's git hooks directory. For example: `cp commitfmt ~/my-repo/.git/hooks/commit-msg`.
 
 There are times when commitfmt may incorrectly return an error. For example, commitfmt will complain if your message has a long URL that goes past the 72 character limit, even though it may be a properly formatted message. In which case, you can tell git to bypass the commitfmt hook by running `git commit --no-verify`.
 
@@ -19,10 +26,10 @@ Rules around spelling and grammar are difficult to check automatically and would
 
 ### Subject
 
-* subj-sentence-case - the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized. This rule does its best to detect proper capitalization, but might need to be ignored for certain messages (e.g., "Fix SomeFunc in MyClassName" will incorrectly trigger this rule).
+* subj-sentence-case - the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized. This rule does its best to detect proper capitalization, but it will need to be ignored for pronouns (e.g., "Fix references to Java libraries" will incorrectly trigger this rule).
 * subj-no-period - the subject should not have a period.
 * subj-len - the subject should not exceed 50 characters.
-* subj-one-line - the subject should not span multiple lines.
+* subj-one-line - the subject should not span multiple lines. Make sure there are two newlines between the subject and body.
 
 ### Body
 
@@ -31,4 +38,5 @@ Rules around spelling and grammar are difficult to check automatically and would
 
 ### General
 
-* unnecessary-space - there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
+* whitespace - there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
+* no-empty - the commit message cannot be empty.
