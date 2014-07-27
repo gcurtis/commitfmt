@@ -1,4 +1,5 @@
-// Package commitfmt contains the commitfmt command.
+// Package commitfmt provides git hook that validates the formatting of a commit
+// message.
 package main
 
 import (

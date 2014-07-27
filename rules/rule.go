@@ -1,5 +1,5 @@
 /*
-Package rules contains the various rules used by commitfmt.
+Package rules contains the various formatting rules used by commitfmt.
 
 Adding Rules
 
@@ -44,8 +44,8 @@ package rules
 // Violation points to a position in the commit message where a rule was
 // violated.
 type Violation struct {
-	Rule Interface
-	Pos  int
+	Rule Interface // Rule is the rule that was violated.
+	Pos  int       // Pos is the string index of where the violation occurred.
 }
 
 // Interface defines the methods that all rules must implement.
