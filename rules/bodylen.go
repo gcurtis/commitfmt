@@ -9,8 +9,12 @@ var BodyLen = &bodyLen{}
 
 type bodyLen struct{}
 
+func (rule *bodyLen) Name() string {
+	return "body-len"
+}
+
 func (rule *bodyLen) Desc() string {
-	return "body-len: each line of the body should not exceed 72 characters."
+	return "each line of the body should not exceed 72 characters."
 }
 
 func (rule *bodyLen) Check(subject string, body string) []Violation {

@@ -5,8 +5,12 @@ var NoEmpty = &noEmpty{}
 
 type noEmpty struct{}
 
+func (rule *noEmpty) Name() string {
+	return "no-empty"
+}
+
 func (rule *noEmpty) Desc() string {
-	return "no-empty: the commit message cannot be empty."
+	return "the commit message cannot be empty."
 }
 
 func (rule *noEmpty) Check(subject string, body string) []Violation {

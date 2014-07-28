@@ -21,7 +21,7 @@ func TestEmptyMessage(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.NoEmpty) {
-		t.Error("Expected violation:", rules.NoEmpty.Desc())
+		t.Error("Expected violation:", ruleString(rules.NoEmpty))
 	}
 }
 
@@ -30,7 +30,7 @@ func TestWhitespaceMessage(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.NoEmpty) {
-		t.Error("Expected violation:", rules.NoEmpty.Desc())
+		t.Error("Expected violation:", ruleString(rules.NoEmpty))
 	}
 }
 
@@ -57,7 +57,7 @@ func TestMultilineSubject(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.SubjOneLine) {
-		t.Error("Expected violations:", rules.SubjOneLine.Desc())
+		t.Error("Expected violations:", ruleString(rules.SubjOneLine))
 	}
 }
 
@@ -66,7 +66,7 @@ func TestSubjectThatIsTooLong(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.SubjLen) {
-		t.Error("Expected violations:", rules.SubjLen.Desc())
+		t.Error("Expected violations:", ruleString(rules.SubjLen))
 	}
 }
 
@@ -75,7 +75,7 @@ func TestSubjectWithTitleCase(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.SubjSentenceCase) {
-		t.Error("Expected violations:", rules.SubjSentenceCase.Desc())
+		t.Error("Expected violations:", ruleString(rules.SubjSentenceCase))
 	}
 }
 
@@ -84,7 +84,7 @@ func TestSubjectWithExtraCapitalizedWords(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.SubjSentenceCase) {
-		t.Error("Expected violations:", rules.SubjSentenceCase.Desc())
+		t.Error("Expected violations:", ruleString(rules.SubjSentenceCase))
 	}
 }
 
@@ -111,7 +111,7 @@ func TestSubjectWithPeriod(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.SubjNoPeriod) {
-		t.Error("Expected violations:", rules.SubjNoPeriod.Desc())
+		t.Error("Expected violations:", ruleString(rules.SubjNoPeriod))
 	}
 }
 
@@ -143,7 +143,7 @@ func TestSubjectWithMultipleSpaces(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
-		t.Error("Expected violations:", rules.Whitespace.Desc())
+		t.Error("Expected violations:", ruleString(rules.Whitespace))
 	}
 }
 
@@ -154,7 +154,7 @@ Body with  multiple spaces.`
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
-		t.Error("Expected violations:", rules.Whitespace.Desc())
+		t.Error("Expected violations:", ruleString(rules.Whitespace))
 	}
 }
 
@@ -170,7 +170,7 @@ Paragraph 3.`
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
-		t.Error("Expected violations:", rules.Whitespace.Desc())
+		t.Error("Expected violations:", ruleString(rules.Whitespace))
 	}
 }
 
@@ -179,7 +179,7 @@ func TestSubjectWithTrailingSpace(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
-		t.Error("Expected violations:", rules.Whitespace.Desc())
+		t.Error("Expected violations:", ruleString(rules.Whitespace))
 	}
 }
 
@@ -188,7 +188,7 @@ func TestBodyWithTrailingSpace(t *testing.T) {
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
-		t.Error("Expected violations:", rules.Whitespace.Desc())
+		t.Error("Expected violations:", ruleString(rules.Whitespace))
 	}
 }
 
@@ -199,7 +199,7 @@ Paragraph that is longer that 72 characters=============================.`
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.BodyLen) {
-		t.Error("Expected violations:", rules.BodyLen.Desc())
+		t.Error("Expected violations:", ruleString(rules.BodyLen))
 	}
 }
 
@@ -210,7 +210,7 @@ Paragraph that doesn't end with punctuation`
 	rep := runRules(msg)
 
 	if !reportHasViolation(rep, rules.BodyPunc) {
-		t.Error("Expected violations:", rules.BodyPunc.Desc())
+		t.Error("Expected violations:", ruleString(rules.BodyPunc))
 	}
 }
 
@@ -282,13 +282,13 @@ in between words and the body doesn't end with punctuation`
 	// [1:77] subj-no-period: the subject should not end with a period.
 	// 	This commit message has a Number of different violations that will be caught.
 	// 	                                                                            ^
-	// [3:65] whitespace - there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
+	// [3:65] whitespace: there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
 	// 	The body is way too long and goes beyond 72 characters per line.  There are unnecessary spaces
 	// 	                                                                ^
 	// [3:72] body-len: each line of the body should not exceed 72 characters.
 	// 	The body is way too long and goes beyond 72 characters per line.  There are unnecessary spaces
 	// 	                                                                       ^
-	// [4:58] body-punc - the body should end with valid punctuation (".", "!", "?") unless it ends with a list.
+	// [4:58] body-punc: the body should end with valid punctuation (".", "!", "?") unless it ends with a list.
 	// 	in between words and the body doesn't end with punctuation
 	// 	                                                         ^
 	// 6 formatting errors were found.

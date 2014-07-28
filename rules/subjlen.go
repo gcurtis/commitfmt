@@ -5,8 +5,12 @@ var SubjLen = &subjLen{}
 
 type subjLen struct{}
 
+func (rule *subjLen) Name() string {
+	return "subj-len"
+}
+
 func (rule *subjLen) Desc() string {
-	return "subj-len: the subject should not exceed 50 characters."
+	return "the subject should not exceed 50 characters."
 }
 
 func (rule *subjLen) Check(subject string, body string) []Violation {

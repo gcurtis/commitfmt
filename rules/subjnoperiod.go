@@ -9,8 +9,12 @@ var SubjNoPeriod = &subjNoPeriod{}
 
 type subjNoPeriod struct{}
 
+func (rule *subjNoPeriod) Name() string {
+	return "subj-no-period"
+}
+
 func (rule *subjNoPeriod) Desc() string {
-	return "subj-no-period: the subject should not end with a period."
+	return "the subject should not end with a period."
 }
 
 func (rule *subjNoPeriod) Check(subject string, body string) []Violation {

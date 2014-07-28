@@ -17,12 +17,16 @@ begins with the word "Ticket".
 	// Rule types are unexported to keep the package's API clean.
 	type myRule struct{}
 
-	// Desc returns a description for your rule. The description should follow
-	// the format of: "my-rule: one to two sentence description of the rule
-	// ending with a period." Note that when rule names are shown to the user,
-	// they use a hyphenated version of their name.
+	// Name returns the name of your rule. The name should be all lowercase and
+	// words should be separated by hyphens.
+	func (rule *myRule) Name() string {
+		return "my-rule"
+	}
+
+	// Desc returns a description for your rule. The description should start
+	// with a lowercase letter, be one to two sentences and end with a period.
 	func (rule *myRule) Desc() string {
-		return `my-rule: the commit subject must begin with "Ticket".`
+		return `the commit subject must begin with "Ticket".`
 	}
 
 	// Check should return any violations of your rule (or nil if there aren't
@@ -54,9 +58,12 @@ type Violation struct {
 
 // Interface defines the methods that all rules must implement.
 type Interface interface {
-	// Desc returns a description of the rule. The description must follow the
-	// format of: "rule-name - one or two sentence description of the rule
-	// ending in a period."
+	// Name returns the name of the rule. The name should be all lowercase and
+	// words should be separated by hyphens.
+	Name() string
+
+	// Desc returns a description of the rule. The description should start with
+	// a lowercase letter, be one to two sentences and end with a period.
 	Desc() string
 
 	// Check takes a commit subject and body, and returns a list of positions

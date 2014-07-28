@@ -25,9 +25,10 @@ func (rep *report) string() string {
 	str := ""
 	for _, v := range rep.violations {
 		lineStart, lineNum, charNum := rep.lineChar(v.Pos)
-		desc := v.Rule.Desc()
+		ruleStr := ruleString(v.Rule)
 		context := rep.context(lineStart, charNum, "\t")
-		str += fmt.Sprintf("[%d:%d] %s\n%s\n", lineNum, charNum, desc, context)
+		str += fmt.Sprintf("[%d:%d] %s\n%s\n", lineNum, charNum, ruleStr,
+			context)
 	}
 	str += fmt.Sprintf("%d formatting errors were found.", len(rep.violations))
 
@@ -87,4 +88,9 @@ func (rep *report) Swap(i, j int) {
 // Less satisfies sort.Interface.
 func (rep *report) Less(i, j int) bool {
 	return rep.violations[i].Pos < rep.violations[j].Pos
+}
+
+// ruleString returns a string representation of a rule.
+func ruleString(r rules.Interface) string {
+	return r.Name() + ": " + r.Desc()
 }

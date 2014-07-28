@@ -14,9 +14,13 @@ var SubjSentenceCase = &subjSentenceCase{}
 
 type subjSentenceCase struct{}
 
+func (rule *subjSentenceCase) Name() string {
+	return "subj-sentence-case"
+}
+
 func (rule *subjSentenceCase) Desc() string {
-	return "subj-sentence-case: the subject should adhere to sentence casing," +
-		" i.e., only the first letter of the first word should be capitalized."
+	return "the subject should adhere to sentence casing, i.e., only the " +
+		"first letter of the first word should be capitalized."
 }
 
 func (rule *subjSentenceCase) Check(subject string, body string) []Violation {

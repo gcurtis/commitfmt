@@ -11,9 +11,13 @@ var BodyPunc = &bodyPunc{}
 
 type bodyPunc struct{}
 
+func (rule *bodyPunc) Name() string {
+	return "body-punc"
+}
+
 func (rule *bodyPunc) Desc() string {
-	return `body-punc - the body should end with valid punctuation ` +
-		`(".", "!", "?") unless it ends with a list.`
+	return `the body should end with valid punctuation (".", "!", "?") unless` +
+		` it ends with a list.`
 }
 
 func (rule *bodyPunc) Check(subject string, body string) []Violation {

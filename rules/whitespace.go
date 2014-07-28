@@ -7,10 +7,14 @@ var Whitespace = &whitespace{}
 
 type whitespace struct{}
 
+func (rule *whitespace) Name() string {
+	return "whitespace"
+}
+
 func (rule *whitespace) Desc() string {
-	return "whitespace - there should not be any unnecessary spacing, i.e., " +
-		"only one line break between paragraphs, only one space between " +
-		"words, and no trailing whitespace."
+	return "there should not be any unnecessary spacing, i.e., only one line " +
+		"break between paragraphs, only one space between words, and no " +
+		"trailing whitespace."
 }
 
 func (rule *whitespace) Check(subject string, body string) []Violation {
