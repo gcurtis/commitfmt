@@ -18,6 +18,10 @@ func (rule *subjOneLine) Desc() string {
 		"two newlines between the subject and body."
 }
 
+func (rule *subjOneLine) Config(conf map[string]interface{}) {
+
+}
+
 func (rule *subjOneLine) Check(subject string, body string) []Violation {
 	if index := strings.Index(subject, "\n"); index != -1 {
 		return []Violation{Violation{rule, index}}

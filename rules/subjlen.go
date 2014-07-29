@@ -13,6 +13,10 @@ func (rule *subjLen) Desc() string {
 	return "the subject should not exceed 50 characters."
 }
 
+func (rule *subjLen) Config(conf map[string]interface{}) {
+
+}
+
 func (rule *subjLen) Check(subject string, body string) []Violation {
 	if len(subject) > 50 {
 		return []Violation{Violation{rule, 50}}
