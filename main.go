@@ -4,6 +4,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/gcurtis/commitfmt/rules"
 	"io/ioutil"
@@ -18,6 +19,9 @@ const snipLine = "------------------------ >8 ------------------------"
 // commentChar is the character git uses for commenting out lines in commit
 // messages.
 const commentChar = '#'
+
+// confName is the name of the commitfmt configuration file.
+const confName = ".commitfmt"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -34,7 +38,8 @@ func main() {
 	}
 	msg := string(bytes)
 
-	report := runRules(msg)
+	conf := readConf()
+	report := runRules(msg, conf)
 	fmt.Println(report.string())
 	if len(report.violations) > 0 {
 		os.Exit(1)
@@ -43,12 +48,23 @@ func main() {
 
 // runRules parses a commit message and then checks every rule found in the
 // rules package.
-func runRules(msg string) (rep *report) {
+func runRules(msg string, conf map[string]interface{}) (rep *report) {
 	msg = strings.TrimSpace(msg)
 	rep = &report{msg: msg}
 	subject, body := parseMsg(msg)
 
 	for _, rule := range rules.All {
+		if conf != nil {
+			ruleConf, ok := conf[rule.Name()]
+			if ok {
+				if ruleConf == false {
+					continue
+				} else {
+					rule.Config(ruleConf.(map[string]interface{}))
+				}
+			}
+		}
+
 		violations := rule.Check(subject, body)
 		rep.append(violations...)
 	}
@@ -77,6 +93,18 @@ func parseMsg(msg string) (subject string, body string) {
 	subject = split[0]
 	if len(split) > 1 {
 		body = split[1]
+	}
+	return
+}
+
+func readConf() (conf map[string]interface{}) {
+	r, err := os.Open(confName)
+	if err != nil {
+		err = json.NewDecoder(r).Decode(&conf)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Couldn't parse conf file, proceeding with"+
+				" default rules.")
+		}
 	}
 	return
 }
