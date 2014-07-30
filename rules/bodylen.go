@@ -17,6 +17,10 @@ func (rule *bodyLen) Desc() string {
 	return "each line of the body should not exceed 72 characters."
 }
 
+func (rule *bodyLen) Config(conf map[string]interface{}) error {
+	return nil
+}
+
 func (rule *bodyLen) Check(subject string, body string) []Violation {
 	var violations []Violation
 	offset := len(subject) + 2

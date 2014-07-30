@@ -17,6 +17,10 @@ func (rule *subjNoPeriod) Desc() string {
 	return "the subject should not end with a period."
 }
 
+func (rule *subjNoPeriod) Config(conf map[string]interface{}) error {
+	return nil
+}
+
 func (rule *subjNoPeriod) Check(subject string, body string) []Violation {
 	if strings.HasSuffix(subject, "...") {
 		return nil

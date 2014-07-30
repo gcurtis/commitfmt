@@ -20,6 +20,10 @@ func (rule *bodyPunc) Desc() string {
 		` it ends with a list.`
 }
 
+func (rule *bodyPunc) Config(conf map[string]interface{}) error {
+	return nil
+}
+
 func (rule *bodyPunc) Check(subject string, body string) []Violation {
 	if len(body) == 0 {
 		return nil

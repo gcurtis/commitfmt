@@ -18,7 +18,7 @@ func reportHasViolation(rep *report, r rules.Interface) bool {
 
 func TestEmptyMessage(t *testing.T) {
 	msg := ""
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.NoEmpty) {
 		t.Error("Expected violation:", ruleString(rules.NoEmpty))
@@ -27,7 +27,7 @@ func TestEmptyMessage(t *testing.T) {
 
 func TestWhitespaceMessage(t *testing.T) {
 	msg := " "
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.NoEmpty) {
 		t.Error("Expected violation:", ruleString(rules.NoEmpty))
@@ -36,7 +36,7 @@ func TestWhitespaceMessage(t *testing.T) {
 
 func TestValidSubject(t *testing.T) {
 	msg := "Subject"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -45,7 +45,7 @@ func TestValidSubject(t *testing.T) {
 
 func TestValidSubjectWithBody(t *testing.T) {
 	msg := "Subject\n\nBody."
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -54,7 +54,7 @@ func TestValidSubjectWithBody(t *testing.T) {
 
 func TestMultilineSubject(t *testing.T) {
 	msg := "Subject1\nSubject2"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.SubjOneLine) {
 		t.Error("Expected violations:", ruleString(rules.SubjOneLine))
@@ -63,7 +63,7 @@ func TestMultilineSubject(t *testing.T) {
 
 func TestSubjectThatIsTooLong(t *testing.T) {
 	msg := "This subject line goes over 50 characters=========="
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.SubjLen) {
 		t.Error("Expected violations:", ruleString(rules.SubjLen))
@@ -72,7 +72,7 @@ func TestSubjectThatIsTooLong(t *testing.T) {
 
 func TestSubjectWithTitleCase(t *testing.T) {
 	msg := "This Subject Is Incorrectly Title Cased"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.SubjSentenceCase) {
 		t.Error("Expected violations:", ruleString(rules.SubjSentenceCase))
@@ -81,7 +81,7 @@ func TestSubjectWithTitleCase(t *testing.T) {
 
 func TestSubjectWithExtraCapitalizedWords(t *testing.T) {
 	msg := "This subject is Incorrectly cased"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.SubjSentenceCase) {
 		t.Error("Expected violations:", ruleString(rules.SubjSentenceCase))
@@ -90,7 +90,7 @@ func TestSubjectWithExtraCapitalizedWords(t *testing.T) {
 
 func TestSubjectWithAcronym(t *testing.T) {
 	msg := "Subject with the acronym ID"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -99,7 +99,7 @@ func TestSubjectWithAcronym(t *testing.T) {
 
 func TestSubjectWithCamelCase(t *testing.T) {
 	msg := "Subject with the class name MyClass in it"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -108,7 +108,7 @@ func TestSubjectWithCamelCase(t *testing.T) {
 
 func TestSubjectWithPeriod(t *testing.T) {
 	msg := "This subject ends with a period."
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.SubjNoPeriod) {
 		t.Error("Expected violations:", ruleString(rules.SubjNoPeriod))
@@ -117,7 +117,7 @@ func TestSubjectWithPeriod(t *testing.T) {
 
 func TestSubjectWithEllipsis(t *testing.T) {
 	msg := "This subject ends with ellipsis..."
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -131,7 +131,7 @@ Paragraph1.
 
 Paragraph2 with
 multiple lines.`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -140,7 +140,7 @@ multiple lines.`
 
 func TestSubjectWithMultipleSpaces(t *testing.T) {
 	msg := "Subject  with multiple spaces"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
 		t.Error("Expected violations:", ruleString(rules.Whitespace))
@@ -151,7 +151,7 @@ func TestBodyWithMultipleSpaces(t *testing.T) {
 	msg := `Subject
 
 Body with  multiple spaces.`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
 		t.Error("Expected violations:", ruleString(rules.Whitespace))
@@ -167,7 +167,7 @@ Paragraph 2.
 
 
 Paragraph 3.`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
 		t.Error("Expected violations:", ruleString(rules.Whitespace))
@@ -176,7 +176,7 @@ Paragraph 3.`
 
 func TestSubjectWithTrailingSpace(t *testing.T) {
 	msg := "Subject with trailing space \n\nBody."
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
 		t.Error("Expected violations:", ruleString(rules.Whitespace))
@@ -185,7 +185,7 @@ func TestSubjectWithTrailingSpace(t *testing.T) {
 
 func TestBodyWithTrailingSpace(t *testing.T) {
 	msg := "Subject\n\nParagraph1. \n\nParagraph2."
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.Whitespace) {
 		t.Error("Expected violations:", ruleString(rules.Whitespace))
@@ -196,7 +196,7 @@ func TestBodyWithLineThatIsTooLong(t *testing.T) {
 	msg := `Subject
 
 Paragraph that is longer that 72 characters=============================.`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.BodyLen) {
 		t.Error("Expected violations:", ruleString(rules.BodyLen))
@@ -207,7 +207,7 @@ func TestBodyThatDoesNotEndWithPunctuation(t *testing.T) {
 	msg := `Subject
 
 Paragraph that doesn't end with punctuation`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if !reportHasViolation(rep, rules.BodyPunc) {
 		t.Error("Expected violations:", ruleString(rules.BodyPunc))
@@ -218,7 +218,7 @@ func TestBodyListThatDoesNotEndWithPunctuation(t *testing.T) {
 	msg := `Subject
 
 * This is a list item`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -247,7 +247,17 @@ Further paragraphs come after blank lines.
   single space, with blank lines in between, but conventions vary here
 
 - Use a hanging indent`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
+
+	if rep.violations != nil {
+		t.Error("Unexpected violations:", rep.string())
+	}
+}
+
+func TestDisabledRule(t *testing.T) {
+	msg := "Subject that ends with a period."
+	conf := map[string]interface{}{"subj-no-period": false}
+	rep := runRules(msg, conf)
 
 	if rep.violations != nil {
 		t.Error("Unexpected violations:", rep.string())
@@ -256,7 +266,7 @@ Further paragraphs come after blank lines.
 
 func Example1() {
 	msg := "This subject is longer than 50 characters and will trigger an error"
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 	fmt.Println(rep.string())
 
 	// Output: [1:51] subj-len: the subject should not exceed 50 characters.
@@ -270,7 +280,7 @@ func Example2() {
 
 The body is way too long and goes beyond 72 characters per line.  There are unnecessary spaces
 in between words and the body doesn't end with punctuation`
-	rep := runRules(msg)
+	rep := runRules(msg, nil)
 	fmt.Println(rep.string())
 
 	// Output: [1:27] subj-sentence-case: the subject should adhere to sentence casing, i.e., only the first letter of the first word should be capitalized.
