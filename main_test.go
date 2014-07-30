@@ -264,6 +264,37 @@ func TestDisabledRule(t *testing.T) {
 	}
 }
 
+func TestSubjectMatchesRegex(t *testing.T) {
+	msg := "TICKET: Subject with a prefix"
+	conf := map[string]interface{}{
+		"subj-sentence-case": false,
+		"subj-regex": map[string]interface{}{
+			"pattern": "^TICKET:.*",
+		},
+	}
+	defer func() { rules.SubjRegex.Config(rules.SubjRegex.DefaultConf) }()
+	rep := runRules(msg, conf)
+
+	if rep.violations != nil {
+		t.Error("Unexpected violations:", rep.string())
+	}
+}
+
+func TestSubjectDoesNotMatchRegex(t *testing.T) {
+	msg := "Unmatching subject with a prefix"
+	conf := map[string]interface{}{
+		"subj-regex": map[string]interface{}{
+			"pattern": "^TICKET:.*",
+		},
+	}
+	defer func() { rules.SubjRegex.Config(rules.SubjRegex.DefaultConf) }()
+	rep := runRules(msg, conf)
+
+	if !reportHasViolation(rep, rules.SubjRegex) {
+		t.Error("Expected violations:", ruleString(rules.SubjRegex))
+	}
+}
+
 func Example1() {
 	msg := "This subject is longer than 50 characters and will trigger an error"
 	rep := runRules(msg, nil)

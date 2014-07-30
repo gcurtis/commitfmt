@@ -127,4 +127,5 @@ var All = []Interface{
 	Whitespace,
 	BodyLen,
 	BodyPunc,
+	SubjRegex,
 }
