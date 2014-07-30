@@ -30,7 +30,7 @@ Rules around spelling and grammar are difficult to check automatically and would
 * subj-no-period - the subject should not end with a period.
 * subj-len - the subject should not exceed 50 characters.
 * subj-one-line - the subject should not span multiple lines. Make sure there are two newlines between the subject and body.
-* subj-regex - the subject should match a configured regex.
+* subj-regex - the subject should match a regex configured via the "pattern" setting.
 
 ### Body
 
@@ -41,3 +41,17 @@ Rules around spelling and grammar are difficult to check automatically and would
 
 * whitespace - there should not be any unnecessary spacing, i.e., only one line break between paragraphs, only one space between words, and no trailing whitespace.
 * no-empty - the commit message cannot be empty.
+
+Configuring Rules
+-----------------
+
+Rules can be configured by creating a `.commitfmt` JSON file in the root of your repo. To disable a rule, set its value to `false` in the conf file. To customize a rule, set its value to a map of the settings you wish to customize. Refer to a rule's documentation to see what settings it provides. For example:
+
+```json
+{
+    "subj-sentence-case": false,
+    "subj-regex": {
+        "pattern": "^Ticket: .+"
+    }
+}
+```

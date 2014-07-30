@@ -5,10 +5,13 @@ import (
 	"regexp"
 )
 
-// SubjRegex checks that the commit subject matches a configured regex.
-var SubjRegex = &subjRegex{DefaultConf: map[string]interface{}{
-	"pattern": nil,
-}}
+// SubjRegex checks that the commit subject matches a regex configured via the
+// "pattern" setting.
+var SubjRegex = &subjRegex{
+	DefaultConf: map[string]interface{}{
+		"pattern": nil,
+	},
+}
 
 type subjRegex struct {
 	DefaultConf map[string]interface{}
