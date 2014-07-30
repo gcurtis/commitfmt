@@ -100,11 +100,13 @@ func parseMsg(msg string) (subject string, body string) {
 func readConf() (conf map[string]interface{}) {
 	r, err := os.Open(confName)
 	if err != nil {
-		err = json.NewDecoder(r).Decode(&conf)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Couldn't parse conf file, proceeding with"+
-				" default rules.")
-		}
+		return
+	}
+
+	err = json.NewDecoder(r).Decode(&conf)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Couldn't parse conf file, proceeding with"+
+			" default rules.")
 	}
 	return
 }
