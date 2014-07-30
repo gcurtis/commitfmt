@@ -56,7 +56,7 @@ func runRules(msg string, conf map[string]interface{}) (rep *report) {
 	for _, rule := range rules.All {
 		if conf != nil {
 			ruleConf, ok := conf[rule.Name()]
-			if ok {
+			if ok && ruleConf != nil {
 				if ruleConf == false {
 					continue
 				} else {
