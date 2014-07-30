@@ -30,6 +30,7 @@ Rules around spelling and grammar are difficult to check automatically and would
 * subj-no-period - the subject should not end with a period.
 * subj-len - the subject should not exceed 50 characters.
 * subj-one-line - the subject should not span multiple lines. Make sure there are two newlines between the subject and body.
+* subj-regex - the subject should match a configured regex.
 
 ### Body
 
