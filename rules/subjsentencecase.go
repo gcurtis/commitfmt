@@ -23,8 +23,8 @@ func (rule *subjSentenceCase) Desc() string {
 		"first letter of the first word should be capitalized."
 }
 
-func (rule *subjSentenceCase) Config(conf map[string]interface{}) {
-
+func (rule *subjSentenceCase) Config(conf map[string]interface{}) error {
+	return nil
 }
 
 func (rule *subjSentenceCase) Check(subject string, body string) []Violation {

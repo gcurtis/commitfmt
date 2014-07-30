@@ -13,8 +13,8 @@ func (rule *noEmpty) Desc() string {
 	return "the commit message cannot be empty."
 }
 
-func (rule *noEmpty) Config(conf map[string]interface{}) {
-
+func (rule *noEmpty) Config(conf map[string]interface{}) error {
+	return nil
 }
 
 func (rule *noEmpty) Check(subject string, body string) []Violation {

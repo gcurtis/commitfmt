@@ -17,8 +17,8 @@ func (rule *whitespace) Desc() string {
 		"trailing whitespace."
 }
 
-func (rule *whitespace) Config(conf map[string]interface{}) {
-
+func (rule *whitespace) Config(conf map[string]interface{}) error {
+	return nil
 }
 
 func (rule *whitespace) Check(subject string, body string) []Violation {
