@@ -39,19 +39,33 @@ func main() {
 	msg := string(bytes)
 
 	conf := readConf()
-	report := runRules(msg, conf)
+	cleaned := cleanMsg(msg)
+	report := runRules(cleaned, conf)
 	fmt.Println(report.string())
 	if len(report.violations) > 0 {
+		// Make a best-effort to save the commit message and provide the user
+		// with some help before exiting.
+		if f, err := ioutil.TempFile("", "commitfmt"); err == nil {
+			_, err := f.WriteString(cleaned)
+			if err == nil {
+				fmt.Fprintf(os.Stderr, "\nYour commit message has been saved. "+
+					"You can edit your previous commit message with:\n"+
+					"\tgit commit -e -F %[1]s\n"+
+					"or you can bypass this check with:\n"+
+					"\tgit commit --no-verify -e -F %[1]s\n",
+					f.Name())
+			}
+			f.Close()
+		}
 		os.Exit(1)
 	}
 }
 
-// runRules parses a commit message and then checks every rule found in the
-// rules package.
-func runRules(msg string, conf map[string]interface{}) (rep *report) {
-	msg = strings.TrimSpace(msg)
-	rep = &report{msg: msg}
-	subject, body := parseMsg(msg)
+// runRules parses a cleaned commit message and then checks every rule found in
+// the rules package.
+func runRules(cleanMsg string, conf map[string]interface{}) (rep *report) {
+	rep = &report{msg: cleanMsg}
+	subject, body := parseMsg(cleanMsg)
 
 	for _, rule := range rules.All {
 		if conf != nil {
@@ -72,14 +86,13 @@ func runRules(msg string, conf map[string]interface{}) (rep *report) {
 	return
 }
 
-// parseMsg parses a message by breaking it up into a subject and a body. It
-// will also remove any commented-out or snipped content.
-func parseMsg(msg string) (subject string, body string) {
+// cleanMsg removes any commented-out or snipped content from a commit message.
+func cleanMsg(msg string) string {
 	remComments := bytes.Buffer{}
 	split := strings.SplitAfter(msg, "\n")
 	for _, line := range split {
 		trim := strings.TrimSpace(line)
-		if strings.Contains(trim, snipLine) {
+		if strings.HasPrefix(trim, string(commentChar)+" "+snipLine) {
 			break
 		}
 		if strings.HasPrefix(trim, string(commentChar)) {
@@ -88,8 +101,13 @@ func parseMsg(msg string) (subject string, body string) {
 
 		remComments.WriteString(line)
 	}
+	return strings.TrimSpace(remComments.String())
+}
 
-	split = strings.SplitN(strings.TrimSpace(remComments.String()), "\n\n", 2)
+// parseMsg parses a cleaned message by breaking it up into a subject and a
+// body.
+func parseMsg(cleanMsg string) (subject string, body string) {
+	split := strings.SplitN(strings.TrimSpace(cleanMsg), "\n\n", 2)
 	subject = split[0]
 	if len(split) > 1 {
 		body = split[1]
