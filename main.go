@@ -6,10 +6,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gcurtis/commitfmt/rules"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/gcurtis/commitfmt/rules"
 )
 
 // snipLine is the special line recognized by git that tells it to strip the

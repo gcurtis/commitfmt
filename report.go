@@ -3,9 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/gcurtis/commitfmt/rules"
 	"sort"
 	"strings"
+
+	"github.com/gcurtis/commitfmt/rules"
 )
 
 // report contains a list of rules that were violated in a commit message.

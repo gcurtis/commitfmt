@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/gcurtis/commitfmt/rules"
 	"testing"
+
+	"github.com/gcurtis/commitfmt/rules"
 )
 
 func reportHasViolation(rep *report, r rules.Interface) bool {
