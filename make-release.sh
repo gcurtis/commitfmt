@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This script creates 64-bit release builds for OSX, Linux and Windows. It
 # requires Go to be set up for cross-compiling to these platforms. Some package
@@ -9,23 +9,21 @@
 
 set -e
 
-release_dir=release
-name=commitfmt
-compress_cmd="zip -9 -m -T -D"
+mkdir -p release
 
-mkdir -p $release_dir
+GOOS=darwin GOARCH=amd64 go build -o release/commitfmt
+cd release
+tar -czf commitfmt-macos.tar.gz commitfmt
+rm commitfmt
+cd ..
 
-GOOS=darwin GOARCH=amd64 go build -o $release_dir/$name
-pushd $release_dir
-$compress_cmd $name-osx.zip $name
-popd
+GOOS=linux GOARCH=amd64 go build -o release/commitfmt
+cd release
+tar -czf commitfmt-linux.tar.gz commitfmt
+rm commitfmt
+cd ..
 
-GOOS=linux GOARCH=amd64 go build -o $release_dir/$name
-pushd $release_dir
-$compress_cmd $name-linux.zip $name
-popd
-
-GOOS=windows GOARCH=amd64 go build -o $release_dir/$name.exe
-pushd $release_dir
-$compress_cmd $name-windows.zip $name.exe
-popd
+GOOS=windows GOARCH=amd64 go build -o release/commitfmt.exe
+cd release
+zip -9 -m -T -D -q commitfmt-windows.zip commitfmt.exe
+cd ..
